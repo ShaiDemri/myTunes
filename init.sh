@@ -1,16 +1,15 @@
 echo 'Starting server'
 
-cd back-end
+cd Backend
 echo installing server dependencies
 npm install
 npm start &
-echo 'Server componenets are up and running'
+echo 'Server is up and running'
 sleep 3s
 
-echo 'Starting iTunes web app'
-
-cd ../front-end
+echo 'Starting myTunes app'
+cd ../Frontend
 echo installing app dependencies
 npm install
 npm start
-echo 'App is up and running'
+echo 'myTunes is up and running. Enjoy!'
