@@ -1,11 +1,8 @@
 import React from 'react';
+import config from './configs/config';
+import configureStore from './store';
+import Home from './containers/Home.jsx';
 
-function App() {
-  return (
-    <div className="App">
+const Main = () => <Home appConfig={{ configureStore, ...config }} />;
 
-    </div>
-  );
-}
-
-export default App;
+export default Main

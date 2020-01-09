@@ -5,4 +5,4 @@ export const appReducers = {
     auth,
 };
 
-export const rootReducer = combineReducers(appReducers)
+export const rootReducer = combineReducers(appReducers);
