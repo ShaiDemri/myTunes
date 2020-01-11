@@ -5,6 +5,7 @@ import {useSelector, shallowEqual} from 'react-redux'
 import {createBrowserHistory} from 'history'
 import SearchTunes from "../pages/SearchTunes";
 import SignUp from "../pages/SignUp";
+import ButtonAppBar from "./AppBar";
 
 const Root = () => {
     const history = createBrowserHistory();
@@ -12,6 +13,7 @@ const Root = () => {
 
     return (<>
             <CssBaseline/>
+            <ButtonAppBar isAuthorised={isAuthorised}/>
             <Router history={history}>
                 <Switch>
                     {(isAuthorised)

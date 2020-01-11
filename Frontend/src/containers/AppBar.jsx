@@ -25,7 +25,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-export default function ButtonAppBar() {
+export default function ButtonAppBar({isAuthorised}) {
     const classes = useStyles();
     const dispatch = useDispatch();
 
@@ -37,7 +37,7 @@ export default function ButtonAppBar() {
                         <MenuIcon />
                     </IconButton>
                     <Typography variant="h6" className={classes.title}>MyTunes</Typography>
-                    <Button className={classes.button} onClick={() => dispatch(userLogout())}>Sign Out</Button>
+                    {isAuthorised?<Button className={classes.button} onClick={() => dispatch(userLogout())}>Sign Out</Button>:<div/>}
                 </Toolbar>
             </AppBar>
         </div>

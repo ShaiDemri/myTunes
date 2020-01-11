@@ -32,7 +32,7 @@ export default function configureStore() {
     const persistorConfig = {
         key: 'root',
         storage,
-        blacklist: []
+        blacklist: ['media']
     };
 
     const reducer = persistReducer(persistorConfig, rootReducer);
