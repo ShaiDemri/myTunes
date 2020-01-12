@@ -1,13 +1,20 @@
 import React from 'react'
 import {useDispatch} from "react-redux";
-import Paper from '@material-ui/core/Paper'
 import {makeStyles} from '@material-ui/core/styles'
-import {fetchMedia, fetchTop10} from '../store/media/actions'
-import SearchField from "../containers/media/SearchField";
+// import Paper from '@material-ui/core/Paper'
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
+import {fetchMedia, fetchTop10} from '../store/media/actions'
+import SearchField from "../containers/media/SearchField";
+import MediaList from "../containers/media/MediaList";
+import TopTenList from "../containers/media/TopTenList";
 
-const useStyles = makeStyles(theme => ({}));
+
+const useStyles = makeStyles(theme => ({
+    paper: {
+        height: "100%",
+    },
+}));
 
 const SearchTunes = (props) => {
     const classes = useStyles(props);
@@ -16,21 +23,24 @@ const SearchTunes = (props) => {
     const dispatchFetchTop10 = () => dispatch(fetchTop10());
 
     return (
-        <>
-            <Paper className={classes.paper}>
-                <Grid container direction={'row'} justify={"flex-start"} alignItems={'center'}>
-                    <SearchField searchMedia={searchMedia}/>
-                    <Grid item xs={4}>
-                        <Button size={'small'} variant="contained" color="primary" className={classes.button}
-                                onClick={dispatchFetchTop10}>
-                            TOP 10
-                        </Button>
-                    </Grid>
+        <Grid container direction={'row'} justify={"flex-start"} alignItems={'center'}>
+            <SearchField searchMedia={searchMedia}/>
+            <Grid item xs={4}/>{/*LAYOUT*/}
+            <Grid item xs={2}>
+                <Button size={'small'} variant="contained" color="primary" className={classes.button}
+                        onClick={dispatchFetchTop10}>
+                    TOP 10
+                </Button>
+            </Grid>
+            <Grid container direction={'row'} justify={"center"} alignItems={'flex-start'}>
+                <Grid item xs={'auto'} md={10}>
+                    <MediaList/>
                 </Grid>
-
-            </Paper>
-        </>
-
+                <Grid item xs={'auto'} md={2}>
+                    <TopTenList/>
+                </Grid>
+            </Grid>
+        </Grid>
     )
 };
 

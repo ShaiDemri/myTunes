@@ -5,14 +5,20 @@ export function userLogout() {
         type: USER_LOGOUT
     }
 }
-export function userSignup() {
+export function userSignup(email, password, firstName, surName) {
     return {
-        type: USER_SIGNUP
+        type: USER_SIGNUP,
+        email,
+        password,
+        firstName,
+        surName
     }
 }
 
-export function userLogin() {
+export function userLogin(email, password) {
     return {
-        type: USER_LOGIN
+        type: USER_LOGIN,
+        email,
+        password
     }
 }

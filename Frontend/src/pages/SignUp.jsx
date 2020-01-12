@@ -3,7 +3,6 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
@@ -11,6 +10,7 @@ import {makeStyles} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import {useDispatch} from "react-redux";
 import {userLogin, userSignup} from '../store/auth/actions'
+import {Link} from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
     '@global': {
@@ -37,15 +37,46 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-// const validateEmail=(e)=>{
-//     return /\S+@\S+\.\S+/.test(e);
-// };
 export default function SignUp(props) {
     const classes = useStyles(props);
     const [isRegistered, setIsRegistered] = React.useState(false);
+    const [email, setEmail] = React.useState("");
+    const [password, setPassword] = React.useState("");
+    const [firstName, setFirstName] = React.useState("");
+    const [surName, setSurName] = React.useState("");
+
+    const onEmailChange = event => {
+        event.preventDefault();
+        setEmail(event.target.value);
+    };
+
+    const onPasswordChange = event => {
+        event.preventDefault();
+        setPassword(event.target.value);
+    };
+    const onFirstNameChange = event => {
+        event.preventDefault();
+        setFirstName(event.target.value);
+    };
+
+    const onSurNameChange = event => {
+        event.preventDefault();
+        setSurName(event.target.value);
+    };
+
     const dispatch = useDispatch();
-    const dispatchSignUp = () => dispatch(userSignup());
-    const dispatchLogin = () => dispatch(userLogin());
+    const dispatchSignUp = (email, password, firstName, surName) => {
+        if (!email || !password) {
+            return;
+        }
+        dispatch(userSignup(email, password, firstName, surName))
+    };
+    const dispatchLogin = (email, password) => {
+        if (!email || !password) {
+            return;
+        }
+        dispatch(userLogin(email, password))
+    };
 
     return (
         <Container component="main" maxWidth="xs">
@@ -55,7 +86,7 @@ export default function SignUp(props) {
                     <LockOutlinedIcon/>
                 </Avatar>
                 <Typography component="h1" variant="h5">
-                    {isRegistered ?"Login":"Sign up"}
+                    {isRegistered ? "Login" : "Sign up"}
                 </Typography>
                 <form className={classes.form} noValidate>
                     <Grid container spacing={2}>
@@ -72,6 +103,7 @@ export default function SignUp(props) {
                                         id="firstName"
                                         label="First Name"
                                         autoFocus
+                                        onChange={event => onFirstNameChange(event)}
                                     />
                                 </Grid>
                                 <Grid item xs={12} sm={6}>
@@ -83,6 +115,7 @@ export default function SignUp(props) {
                                         label="Last Name"
                                         name="lastName"
                                         autoComplete="lname"
+                                        onChange={event => onSurNameChange(event)}
                                     />
                                 </Grid>
                             </>)
@@ -96,6 +129,7 @@ export default function SignUp(props) {
                                 label="Email Address"
                                 name="email"
                                 autoComplete="email"
+                                onChange={event => onEmailChange(event)}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -108,32 +142,38 @@ export default function SignUp(props) {
                                 type="password"
                                 id="password"
                                 autoComplete="current-password"
+                                onChange={event => onPasswordChange(event)}
                             />
                         </Grid>
                     </Grid>
-                    <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        color="primary"
-                        className={classes.submit}
-                        onClick={isRegistered ? ()=>dispatchLogin():()=>dispatchSignUp()}
-                    >
-                        {isRegistered ?"Login":"Sign up"}
-                    </Button>
+                    <Link to={`/searchTune`} onClick={() => {
+                    }}>
+                        <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            color="primary"
+                            className={classes.submit}
+                            onClick={isRegistered
+                                ? () => dispatchLogin(email, password)
+                                : () => dispatchSignUp(email, password, firstName, surName)}
+                        >
+                            {isRegistered ? "Login" : "Sign up"}
+                        </Button>
+                    </Link>
                     <Grid container justify="flex-end">
                         <Grid item>
                             {isRegistered
-                                ? (<Link href="#" variant="body2" onClick={() => {
+                                ? (<a href="#Login" onClick={() => {
                                     setIsRegistered(false)
                                 }}>
                                     Don't have an account? Sign up! It's FREE!
-                                </Link>)
-                                : (<Link href="#" variant="body2" onClick={() => {
+                                </a>)
+                                : (<a href="#SignUp" onClick={() => {
                                     setIsRegistered(true)
                                 }}>
                                     Already have an account? Login
-                                </Link>)}
+                                </a>)}
                         </Grid>
                     </Grid>
                 </form>

@@ -5,12 +5,9 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import MediumItem from './MediumItem'
 import Paper from "@material-ui/core/Paper";
+import {useSelector} from "react-redux";
 
 const useStyles = makeStyles(theme => ({
-    root: {
-        flexGrow: 1,
-        maxWidth: 752,
-    },
     demo: {
         backgroundColor: theme.palette.background.paper,
     },
@@ -20,21 +17,21 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-const MediaList = ({media}) => {
+const MediaList = () => {
     const classes = useStyles();
-
+    const media = useSelector(state => state.media.media);
 
     return (
-        <Grid item xs={6} md={3}>
-            <Typography variant="h6" className={classes.title}>
-                Media
-            </Typography>
-            <Paper className={classes.demo} style={{height:250,maxHeight: 250, overflow: 'auto'}}>
-                <List dense={true}>
-                    {media.map(medium => <MediumItem key={medium.etag} medium={medium} />,
-                    )}
-                </List>
-            </Paper>
+        <Grid container direction={'row'} className={classes.demo}>
+            <Grid item xs={12} md={12} xl={12}>
+                <Typography variant="h6" className={classes.title}>
+                    Media
+                </Typography>
+            </Grid>
+            <Grid container item xs={8} md={8} xl={8}>
+                {media.map((medium, index) => <MediumItem key={medium.trackId} medium={medium} index={index}/>,
+                )}
+            </Grid>
         </Grid>
     );
 };

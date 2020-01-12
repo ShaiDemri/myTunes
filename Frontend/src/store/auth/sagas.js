@@ -3,60 +3,63 @@ import {
     put,
     takeEvery
 } from 'redux-saga/effects'
-// import api from '../api'
+import {callServer} from '../api'
 
-import { USER_LOGOUT, USER_LOGIN, USER_SIGNUP } from './types'
+import {USER_LOGOUT, USER_LOGIN, USER_SIGNUP,USER_LOGIN_SUCCEEDED,USER_LOGOUT_SUCCEEDED,USER_SIGNUP_SUCCEEDED} from './types'
 
-function* login(action) {
+function* login(payload) {
+    const {email, password}= payload;
     try {
-        //   const result = yield call(Api.login, action.payload.userId);
-        let user = null;
+        const user = yield call(callServer, '/user/login/','post',{email, password});
         yield put({
-            type: USER_LOGIN+"_SUCCEEDED",
+            type: USER_LOGIN_SUCCEEDED,
             user: user
         });
     } catch (e) {
         yield put({
-            type: USER_LOGIN+"_FAILED",
-            message: e.message
-        });
-    }
-}
-function* signUp(action) {
-    try {
-        //   const result = yield call(Api.login, action.payload.userId);
-        let user = null;
-        yield put({
-            type: USER_SIGNUP+"_SUCCEEDED",
-            user: user
-        });
-    } catch (e) {
-        yield put({
-            type: USER_SIGNUP+"_FAILED",
+            type: USER_LOGIN + "_FAILED",
             message: e.message
         });
     }
 }
 
-function* logout(action) {
+function* signUp(payload) {
+    const {email, password, firstName, surName}= payload;
     try {
-        let user = null;
+        const user = yield call(callServer, '/user/signup/','post',{email, password, firstName, surName} );
         yield put({
-            type: USER_LOGOUT+"_SUCCEEDED",
+            type: USER_SIGNUP_SUCCEEDED,
             user: user
         });
     } catch (e) {
         yield put({
-            type: USER_LOGOUT+"_FAILED",
+            type: USER_SIGNUP + "_FAILED",
             message: e.message
         });
     }
 }
 
-function* loginSaga() {
+function* logout() {
+    try {
+
+        const user = yield call(callServer, '/user/logout/','post');
+        yield put({
+            type: USER_LOGOUT_SUCCEEDED,
+            user: null
+        });
+    } catch (e) {
+        yield put({
+            type: USER_LOGOUT + "_FAILED",
+            message: e.message
+        });
+    }
+}
+
+function* loginSaga(payload) {
     yield takeEvery(USER_LOGIN, login);
 }
-function* signupSaga() {
+
+function* signupSaga(payload) {
     yield takeEvery(USER_SIGNUP, signUp);
 }
 

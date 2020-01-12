@@ -35,7 +35,7 @@ const PageNotFound = (props) => {
             <div className={classes.container}>
                 <Typography variant="h4">404</Typography>
                 <Typography variant="subtitle1">Nothing to see here folks.</Typography>
-                <Button variant="fab" color="secondary" aria-label="home" href="/" className={classes.button}>
+                <Button variant="fab" color="secondary" aria-label="home" href="/searchTune" className={classes.button}>
                     <Home/>
                 </Button>
             </div>

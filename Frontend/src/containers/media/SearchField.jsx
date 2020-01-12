@@ -16,10 +16,10 @@ const useStyles = makeStyles(theme => ({
 const SearchField = ({searchMedia}) => {
     const classes = useStyles();
 
-    const [term, setTerm] = useState('');
+    const [query, setQuery] = useState('');
 
     const onInputChange = (event) => {
-        setTerm(event.target.value);
+        setQuery(event.target.value);
     };
 
     return (
@@ -29,7 +29,7 @@ const SearchField = ({searchMedia}) => {
                     id="outlined-textarea"
                     label="Search iTunes"
                     placeholder={"Search for iTunes media"}
-                    value={term}
+                    value={query}
                     onChange={event => onInputChange(event)}
                     className={classes.textField}
                     margin="normal"
@@ -39,7 +39,7 @@ const SearchField = ({searchMedia}) => {
 
             <Grid item xs={2}>
                 <Button size={'small'} variant="contained" color="primary" className={classes.button}
-                        onClick={() => searchMedia(term)}>
+                        onClick={() => searchMedia(query)}>
                     search
                 </Button>
             </Grid>

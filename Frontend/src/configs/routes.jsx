@@ -14,8 +14,8 @@ const AsyncPageNotFound = Loadable({ loader: () => import('../pages/PageNotFound
 
 const routes = [
     <RestrictedRoute type="public" path="/signup" exact component={AsyncSignUp} />,
+    <RestrictedRoute type="private" path="/tune/:tuneId" component={AsyncTune} />,
     <RestrictedRoute type="private" path="/searchTune" exact component={AsyncSearchTunes} />,
-    <RestrictedRoute type="private" path="/searchTune/:tuneId" exact component={AsyncTune} />,
     <RestrictedRoute type="public" path = "/" component={AsyncPageNotFound} />
 ];
 

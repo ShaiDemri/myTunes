@@ -17,22 +17,19 @@ export const RootAsync = Loadable({
 const App = ({ appConfig }) => {
     const store = appConfig && appConfig.configureStore ? appConfig.configureStore() : configureStore();
     const configs = { ...config, ...appConfig };
-    const { landingPage: LandingPage = false } = configs;
 
     return (
             <Provider store={store}>
                 <BrowserRouter>
-                    <Switch>
-                        {LandingPage && <Route path="/" exact component={LandingPage} />}
                         <Switch>
                             <Route>
                                 <RootAsync appConfig={configs} />
                             </Route>
                         </Switch>
-                    </Switch>
+
                 </BrowserRouter>
             </Provider>
     )
-}
+};
 
 export default App

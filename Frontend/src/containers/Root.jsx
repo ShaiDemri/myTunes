@@ -4,7 +4,9 @@ import CssBaseline from '@material-ui/core/CssBaseline'
 import {useSelector, shallowEqual} from 'react-redux'
 import {createBrowserHistory} from 'history'
 import SearchTunes from "../pages/SearchTunes";
+import Tune from "../pages/Tune";
 import SignUp from "../pages/SignUp";
+import PageNotFound from "../pages/PageNotFound";
 import ButtonAppBar from "./AppBar";
 
 const Root = () => {
@@ -13,14 +15,20 @@ const Root = () => {
 
     return (<>
             <CssBaseline/>
-            <ButtonAppBar isAuthorised={isAuthorised}/>
             <Router history={history}>
-                <Switch>
-                    {(isAuthorised)
-                        ? <Route component={SearchTunes}/>
-                        : <Route component={SignUp}/>
-                    }
-                </Switch>
+                <>
+                    <ButtonAppBar isAuthorised={isAuthorised}/>
+                    <Switch>
+                        {(isAuthorised)
+                            ? <Switch>
+                                <Route path="/tune/:tuneId" component={Tune}/>
+                                <Route path="/searchTune" component={SearchTunes}/>
+                                <Route path="*" component={PageNotFound}/>
+                            </Switch>
+                            : <Route component={SignUp}/>
+                        }
+                    </Switch>
+                </>
             </Router>
         </>
     )
