@@ -5,5 +5,7 @@ const router = express.Router();
 
 router.get('/top10',mediaMiddleware.headerExtractor, mediaMiddleware.fetchTop10 ,mediaController.fetchTop10);
 router.get('/:query',mediaMiddleware.headerExtractor, mediaMiddleware.fetchMedia,mediaMiddleware.storeTermInDb,mediaController.handleMedia);
+router.post('/selected',mediaController.setSelected);
+router.get('/selected',mediaController.getSelected);
 
 module.exports = router;

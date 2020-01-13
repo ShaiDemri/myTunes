@@ -3,7 +3,7 @@ import {useSelector} from 'react-redux'
 import {Route, Redirect} from 'react-router'
 
 export const RestrictedRoute = ({type, component: Component, fallbackComponent: FallbackComponent = false, ...rest}) => {
-    const isAuthorised = useSelector(state => state.auth.isAuthorised);
+    const isAuthorised = useSelector(state => state.auth.isAuthorised) !== undefined;
     return (
         <Route
             {...rest}

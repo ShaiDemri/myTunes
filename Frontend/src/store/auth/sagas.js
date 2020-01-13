@@ -41,8 +41,7 @@ function* signUp(payload) {
 
 function* logout() {
     try {
-
-        const user = yield call(callServer, '/user/logout/','post');
+        yield call(callServer, '/user/logout/','post');
         yield put({
             type: USER_LOGOUT_SUCCEEDED,
             user: null

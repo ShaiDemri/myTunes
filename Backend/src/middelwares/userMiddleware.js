@@ -28,7 +28,7 @@ const loginToDb = (req, res, next) => {
         if (err) {
             next(err)
         }
-        if (!user) {
+        else if (!user) {
             next("NO USER FOUND")
         }
         else if (password !== user.password) {

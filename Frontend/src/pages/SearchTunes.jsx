@@ -1,5 +1,5 @@
 import React from 'react'
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {makeStyles} from '@material-ui/core/styles'
 // import Paper from '@material-ui/core/Paper'
 import Grid from "@material-ui/core/Grid";
@@ -21,7 +21,16 @@ const SearchTunes = (props) => {
     const dispatch = useDispatch();
     const searchMedia = (query) => dispatch(fetchMedia(query));
     const dispatchFetchTop10 = () => dispatch(fetchTop10());
-
+    const isAuth = useSelector(state => state.auth.user)!== undefined;
+    React.useEffect(() => {
+        if (!isAuth) {
+            const location = {
+                pathname: '/signup',
+                state: {from: {pathname: '/searchTune'}}
+            };
+            props.history.push(location);
+        }
+    }, [isAuth]);
     return (
         <Grid container direction={'row'} justify={"flex-start"} alignItems={'center'}>
             <SearchField searchMedia={searchMedia}/>

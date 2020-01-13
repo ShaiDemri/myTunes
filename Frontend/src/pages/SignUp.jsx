@@ -8,9 +8,9 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import {makeStyles} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {userLogin, userSignup} from '../store/auth/actions'
-import {Link} from "react-router-dom";
+import {Link,Redirect} from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
     '@global': {
@@ -44,6 +44,16 @@ export default function SignUp(props) {
     const [password, setPassword] = React.useState("");
     const [firstName, setFirstName] = React.useState("");
     const [surName, setSurName] = React.useState("");
+    const isAuth = useSelector(state => state.auth.user)!== undefined;
+    React.useEffect(() => {
+        if (isAuth) {
+            const location = {
+                pathname: '/searchTune',
+                state: {from: {pathname: '/signup'}}
+            }
+            props.history.push(location);
+        }
+    }, [isAuth]);
 
     const onEmailChange = event => {
         event.preventDefault();
@@ -69,13 +79,13 @@ export default function SignUp(props) {
         if (!email || !password) {
             return;
         }
-        dispatch(userSignup(email, password, firstName, surName))
+        dispatch(userSignup(email, password, firstName, surName));
     };
     const dispatchLogin = (email, password) => {
         if (!email || !password) {
             return;
         }
-        dispatch(userLogin(email, password))
+        dispatch(userLogin(email, password));
     };
 
     return (
@@ -146,20 +156,21 @@ export default function SignUp(props) {
                             />
                         </Grid>
                     </Grid>
-                    <Link to={`/searchTune`} onClick={() => {
-                    }}>
-                        <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            color="primary"
-                            className={classes.submit}
-                            onClick={isRegistered
+                    <Link to={`/searchTune`} replace>
+                    <Button
+                        type="submit"
+                        fullWidth
+                        variant="contained"
+                        color="primary"
+                        className={classes.submit}
+                        onClick={
+                            isRegistered
                                 ? () => dispatchLogin(email, password)
-                                : () => dispatchSignUp(email, password, firstName, surName)}
-                        >
-                            {isRegistered ? "Login" : "Sign up"}
-                        </Button>
+                                : () => dispatchSignUp(email, password, firstName, surName)
+                        }
+                    >
+                        {isRegistered ? "Login" : "Sign up"}
+                    </Button>
                     </Link>
                     <Grid container justify="flex-end">
                         <Grid item>

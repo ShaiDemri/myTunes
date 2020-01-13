@@ -8,7 +8,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import Grid from "@material-ui/core/Grid";
 import {useDispatch} from "react-redux";
-import {selectedTune} from '../../store/media/actions'
+import {selectedTune} from '../../store/tune/actions'
 
 
 const useStyles = makeStyles(theme => ({
@@ -46,7 +46,7 @@ const MediumItem = ({medium, index}) => {
 const dispatch = useDispatch();
 const dispatchSelectedTune = (tune)=>dispatch(selectedTune(tune));
     return (
-        <Link to={`/tune/${medium.trackId}`} onClick={()=>dispatchSelectedTune(medium)}>
+        <Link to={`/tune/${medium.trackId||medium.collectionId}`} replace onClick={()=>dispatchSelectedTune(medium)}>
             {index % 5 === 0 ? <Grid container item xs={12} spacing={3} children={content()}/> : content() }
         </Link>
     );

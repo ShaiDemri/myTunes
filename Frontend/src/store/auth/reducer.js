@@ -1,7 +1,6 @@
 import * as types from './types'
 
 const initialState = {
-    isAuthorised: false,
     user: undefined
 };
 
@@ -11,14 +10,18 @@ export default function auth(state = initialState, action) {
         case types.USER_LOGOUT_SUCCEEDED:
             return {
                 ...state,
-                isAuthorised: false
+                user: undefined
             };
         case types.USER_LOGIN_SUCCEEDED:
+            return {
+                ...state,
+                user: action.user
+            };
+
         case types.USER_SIGNUP_SUCCEEDED:
             return {
                 ...state,
-                isAuthorised: true,
-                user: action.user.data.user
+                user: action.user
             };
         default:
             return state

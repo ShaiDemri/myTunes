@@ -1,20 +1,48 @@
 import React from "react";
-import {connect, useSelector} from "react-redux";
-import {makeStyles, useTheme} from "@material-ui/core/styles";
+import { useSelector} from "react-redux";
+import {makeStyles} from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import Fab from "@material-ui/core/Fab";
 import CardMedia from '@material-ui/core/CardMedia';
-
 import {AudioPlayer} from "mui-audio-player";
 import ReactPlayer from "react-player";
 
+const useStyles = makeStyles(theme => ({
+    card: {
+        display: 'flex',
+    },
+    details: {
+        display: 'flex',
+        flexDirection: 'column',
+    },
+    content: {
+        flex: '1 0 auto',
+    },
+    cover: {
+        width: '-webkit-fill-available',
+    },
+    button:{
+        width:'-webkit-fill-available'
+
+    }
+}));
 
 const Tune = props => {
 
-    const tune = useSelector(state => state.media.selectedTune);
-
+    const classes = useStyles();
+    const tune = useSelector(state => state.tune.selectedTune);
+    const isAuth = useSelector(state => state.auth.user)!== undefined;
+    React.useEffect(() => {
+        if (!isAuth) {
+            const location = {
+                pathname: '/signup',
+                state: {from: {pathname: '/searchTune'}}
+            };
+            props.history.push(location);
+        }
+    }, [isAuth]);
     const {
         artistName,
         trackName,
@@ -23,42 +51,25 @@ const Tune = props => {
         collectionName,
         previewUrl,
         kind,
+        wrapperType
     } = tune;
 
-    const isSong = kind === "song";
+    const isSong = kind === "song" || wrapperType==="audiobook";
 
-    const useStyles = makeStyles(theme => ({
-        card: {
-            display: 'flex',
-        },
-        details: {
-            display: 'flex',
-            flexDirection: 'column',
-        },
-        content: {
-            flex: '1 0 auto',
-        },
-        cover: {
-            width: '-webkit-fill-available',
-        },
-        button:{
-            width:'-webkit-fill-available'
-
-        }
-    }));
-
-    const classes = useStyles();
     const backHome = () => {
-        props.history.goBack();
+        const location = {
+            pathname: '/searchTune',
+            state: {from: {pathname: '/tune'}}
+        };
+        props.history.push(location);
     };
-
     return (
         <>
             <Card className={classes.card}>
                 <div className={classes.details}>
                     <CardContent className={classes.content}>
                         <Typography component="h5" variant="h5">
-                            {trackName} / {collectionName}
+                            {trackName} {collectionName}
                         </Typography>
                         <Typography variant="subtitle1" color="textSecondary">
                             {artistName}

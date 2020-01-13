@@ -1,6 +1,6 @@
 import React from 'react'
-import {Router, Route, Switch} from 'react-router-dom'
-import CssBaseline from '@material-ui/core/CssBaseline'
+import {BrowserRouter, Route, Switch} from 'react-router-dom';
+import CssBaseline from '@material-ui/core/CssBaseline';
 import {useSelector, shallowEqual} from 'react-redux'
 import {createBrowserHistory} from 'history'
 import SearchTunes from "../pages/SearchTunes";
@@ -11,11 +11,11 @@ import ButtonAppBar from "./AppBar";
 
 const Root = () => {
     const history = createBrowserHistory();
-    const isAuthorised = useSelector(state => state.auth.isAuthorised, shallowEqual);
+    const isAuthorised = useSelector(state => state.auth.user, shallowEqual) !== undefined;
 
     return (<>
             <CssBaseline/>
-            <Router history={history}>
+            <BrowserRouter history={history}>
                 <>
                     <ButtonAppBar isAuthorised={isAuthorised}/>
                     <Switch>
@@ -23,13 +23,14 @@ const Root = () => {
                             ? <Switch>
                                 <Route path="/tune/:tuneId" component={Tune}/>
                                 <Route path="/searchTune" component={SearchTunes}/>
+                                <Route path="/" component={SearchTunes}/>
                                 <Route path="*" component={PageNotFound}/>
                             </Switch>
                             : <Route component={SignUp}/>
                         }
                     </Switch>
                 </>
-            </Router>
+            </BrowserRouter>
         </>
     )
 };

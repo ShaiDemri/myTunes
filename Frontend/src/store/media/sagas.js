@@ -9,14 +9,12 @@ import {
     FETCH_MEDIA,
     FETCH_MEDIA_SUCCESS,
     FETCH_TOP10,
-    FETCH_TOP10_SUCCESS,
-    SELECTED_TUNE,
-    SELECTED_TUNE_SUCCESS
+    FETCH_TOP10_SUCCESS
 } from './types'
 
 import {callServer} from '../api'
 
-const getUserEmail = state => state.auth.user.email;
+const getUserEmail = state => state.auth.user.data.user.email;
 
 // worker saga
 export function* fetchMedia(payload) {
@@ -35,10 +33,6 @@ export function* fetchMedia(payload) {
     }
 }
 
-export function* selectedTune(payload) {
-    const {tune} = payload;
-    yield put({type: SELECTED_TUNE_SUCCESS, tune});
-}
 // worker saga
 export function* fetchTop10() {
     const email = yield select(getUserEmail);
@@ -60,16 +54,11 @@ function* fetchMediaSaga(payload) {
     yield takeEvery(FETCH_MEDIA, fetchMedia);
 }
 
-function* selectedTuneSaga(payload) {
-    yield takeEvery(SELECTED_TUNE, selectedTune);
-}
-
 function* fetchTop10Saga() {
     yield takeEvery(FETCH_TOP10, fetchTop10);
 }
 
 export const mediaSagas = [
     call(fetchMediaSaga),
-    call(selectedTuneSaga),
     call(fetchTop10Saga),
 ];

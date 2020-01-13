@@ -5,7 +5,6 @@ import TopTenItem from "./TopTenItem";
 import Paper from "@material-ui/core/Paper";
 import {useSelector} from "react-redux";
 import Typography from "@material-ui/core/Typography";
-import Grid from "@material-ui/core/Grid";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -14,12 +13,10 @@ const useStyles = makeStyles(theme => ({
     },
     paper: {
         backgroundColor: theme.palette.background.paper,
-        position: 'sticky',
-        top: 0,
         maxWidth: 100,
         height: 'auto',
-        maxHeight: 500,
-        overflow: 'auto'
+        maxHeight: 600,
+        overflow: 'hidden'
     },
     title: {
         margin: theme.spacing(4, 0, 2),
