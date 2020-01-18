@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const apiUrl = 'http://localhost:3030';
+const apiUrl = 'https://my-tune.herokuapp.com/';
 
 
 export const callServer = (url, method = 'get', data = undefined,headers=undefined) => {
