@@ -9,7 +9,7 @@ const errorHandler = require('./errorHandler');
 const mongoURL ="mongodb://superuser:superuserPa55@ds127115.mlab.com:27115/my-tunes";
 
 const app = express();
-const port = 3030;
+const port = process.env.PORT || 3030;
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.use(cors({origin: 'http://localhost:3000'}));
