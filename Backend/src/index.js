@@ -36,6 +36,7 @@ mongoDB.on('error', err=> {
 
 app.use('/media', mediaRouter);
 app.use('/user', userRouter);
+app.use('*',()=>console.log("hello") );
 app.use(errorHandler.handleError);
 
 
